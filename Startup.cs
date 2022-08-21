@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SocialMedia.Data;
 
 namespace SocialMedia
 {
@@ -24,6 +27,20 @@ namespace SocialMedia
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<SocialDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("SocialMediaConnection")));
+
+            services.AddIdentityCore<IdentityUser>(options => {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredUniqueChars = 0;
+            }).AddRoles<IdentityRole>()
+         .AddEntityFrameworkStores<SocialDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
