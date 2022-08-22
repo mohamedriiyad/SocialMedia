@@ -1,0 +1,69 @@
+﻿@model SocialMedia.ViewModels.RegisterViewModel
+@{
+    ViewBag.Title = "Create new user";
+    //Layout = "~/views/shared/_AdminLayout.cshtml";
+}
+
+<div class="app-page-title">
+    <div class="page-title-wrapper">
+        <div class="page-title-heading">
+            <div class="page-title-icon">
+                <i class="fas fa-plus-circle icon-gradient bg-happy-itmeo">
+                </i>
+            </div>
+            <div>
+                new_user
+                <div class="page-title-subheading">
+
+                </div>
+            </div>
+        </div>
+        <div class="page-title-actions">
+
+            <div class="d-inline-block">
+                <p>
+                    @Html.ActionLink("back_to_list", "AdminIndex", null, new { @class = "btn btn-primary" })
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="col-md-2 control-label">Username</label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Username</label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Password</label>
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Confirm Password</label>
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-primary" value="create" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+}
