@@ -77,6 +77,7 @@ D:\Sources\SocialMedia\bin\Debug\net5.0\runtimes\win-x86\native\Microsoft.Data.S
 D:\Sources\SocialMedia\bin\Debug\net5.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 D:\Sources\SocialMedia\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\Sources\SocialMedia\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+<<<<<<< HEAD
 D:\work\Projects\SocialMedia\bin\Debug\net5.0\appsettings.Development.json
 D:\work\Projects\SocialMedia\bin\Debug\net5.0\appsettings.json
 D:\work\Projects\SocialMedia\bin\Debug\net5.0\SocialMedia.exe
@@ -156,3 +157,7 @@ D:\work\Projects\SocialMedia\obj\Debug\net5.0\SocialMedia.dll
 D:\work\Projects\SocialMedia\obj\Debug\net5.0\ref\SocialMedia.dll
 D:\work\Projects\SocialMedia\obj\Debug\net5.0\SocialMedia.pdb
 D:\work\Projects\SocialMedia\obj\Debug\net5.0\SocialMedia.genruntimeconfig.cache
+=======
+D:\Sources\SocialMedia\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
+D:\Sources\SocialMedia\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
+>>>>>>> 632a2ebe2553575f1a074afe04f7f8900b7987e5

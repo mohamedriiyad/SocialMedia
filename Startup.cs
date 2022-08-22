@@ -30,17 +30,18 @@ namespace SocialMedia
             services.AddDbContext<SocialDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SocialMediaConnection")));
 
-            services.AddIdentityCore<IdentityUser>(options => {
-                options.SignIn.RequireConfirmedAccount = false;
-                options.User.RequireUniqueEmail = true;
-                options.Password.RequireDigit = true;
+            services.AddIdentity<IdentityUser, IdentityRole>(options => {
+                //options.SignIn.RequireConfirmedAccount = false;
+                //options.User.RequireUniqueEmail = true;
+                options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 8;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
                 options.Password.RequiredUniqueChars = 0;
-            }).AddRoles<IdentityRole>()
-         .AddEntityFrameworkStores<SocialDbContext>();
+            })
+           .AddEntityFrameworkStores<SocialDbContext>()
+           .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +61,7 @@ namespace SocialMedia
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
