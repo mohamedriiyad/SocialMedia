@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -31,10 +32,78 @@ namespace SocialMedia.Controllers
             return View();
         }
 
-        public IActionResult Login(string returnUrl)
+        public async Task<IActionResult> logout()
         {
-            ViewData["returnUrl"] = returnUrl == null ? "/" : returnUrl;
-            return View();
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
+        }
+
+        [HttpPost]
+        public IActionResult ExternalLogin(string provider, string returnUrl)
+        {
+            var redirectUrl = Url.Action("ExternalLoginCallBack", "Account", new { ReturnUrl = returnUrl });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return new ChallengeResult(provider, properties);
+        }
+        
+        public async Task<IActionResult> ExternalLoginCallBackAsync(string returnUrl = null, string remoteError = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+            var model = new LoginViewModel
+            {
+                ReturnUrl = returnUrl,
+                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            };
+
+            if(remoteError != null)
+            {
+                ModelState.AddModelError("", $"Error from external provider: {remoteError}");
+                return View("Login", model);
+            }
+            
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if(info == null)
+            {
+                ModelState.AddModelError("", "Error loading External login info!");
+                return View("Login", model);
+            }
+
+            var signInResult = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, 
+                info.ProviderKey, false, false);
+            if (signInResult.Succeeded)
+                return LocalRedirect(returnUrl);
+            else
+            {
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+                if (email != null)
+                {
+                    var user = await _userManager.FindByEmailAsync(email);
+                    if(user == null)
+                    {
+                        user = new IdentityUser
+                        {
+                            Email = email,
+                            UserName = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        };
+                        await _userManager.CreateAsync(user);
+                    }
+                    await _userManager.AddLoginAsync(user, info);
+                    await _signInManager.SignInAsync(user, false);
+
+                    return LocalRedirect(returnUrl);
+                }
+                ModelState.AddModelError("", $"Email claim not recieved from: {info.LoginProvider}");
+                return View("Login", model);
+            }
+        }
+        public async Task<IActionResult> LoginAsync(string returnUrl)
+        {
+            var model = new LoginViewModel {
+                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList(),
+                ReturnUrl = returnUrl
+            };
+
+            return View(model);
         }
 
         [HttpPost]

@@ -42,6 +42,14 @@ namespace SocialMedia
             })
            .AddEntityFrameworkStores<SocialDbContext>()
            .AddDefaultTokenProviders();
+
+            services.AddAuthentication()
+                .AddFacebook(options =>
+                {
+                    var facebook = Configuration.GetSection("Authentication:Facebook");
+                    options.AppId = facebook["AppId"];
+                    options.AppSecret = facebook["AppSecret"];
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

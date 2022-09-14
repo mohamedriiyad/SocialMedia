@@ -1,37 +1,64 @@
 ﻿@model SocialMedia.ViewModels.LoginViewModel
 @{
-//this.Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    //this.Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
-
-@using (this.Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div class="header">
-        <div class="logo-container" style="width: 143px;">
-            <a href="@Url.Action("Index","Home")"><img src="~/assets/images/icons/logo-01.png"></a>
-        </div>
-        <h5>تسجيل الدخول</h5>
+<div class="row">
+    <div class="col-md-6">
+        <h1>Local Account Login</h1>
+        @using (this.Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="header">
+                <div class="logo-container" style="width: 143px;">
+                    @*<a href="@Url.Action("Index","Home")"><img src="~/assets/images/icons/logo-01.png"></a>*@
+                </div>
+                <h5>تسجيل الدخول</h5>
+            </div>
+            <div class="content">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="input-group input-lg">
+                    <input asp-for="Username" class="form-control" placeholder="ادخل اسم المستخدم">
+                    <span class="input-group-addon">
+                        <i class="zmdi zmdi-account-circle"></i>
+                    </span>
+                </div>
+                <div class="input-group input-lg">
+                    <input asp-for="Password" type="password" placeholder="ادخل كلمة المرور" class="form-control" />
+                    <span class="input-group-addon">
+                        <i class="zmdi zmdi-lock"></i>
+                    </span>
+                </div>
+                <div class="form-group checkbox text-left mt-3">
+                    @Html.EditorFor(model => model.RememberMe)
+                    @Html.LabelFor(model => model.RememberMe)
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-round btn-lg btn-block">دخول</button>
+            </div>
+        }
     </div>
-    <div class="content">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="input-group input-lg">
-            <input asp-for="Username" placeholder="ادخل اسم المستخدم">
-            <span class="input-group-addon">
-                <i class="zmdi zmdi-account-circle"></i>
-            </span>
-        </div>
-        <div class="input-group input-lg">
-            <input asp-for="Password" type="password" placeholder="ادخل كلمة المرور" class="form-control" />
-            <span class="input-group-addon">
-                <i class="zmdi zmdi-lock"></i>
-            </span>
-        </div>
-        <div class="form-group checkbox text-left mt-3">
-            @Html.EditorFor(model => model.RememberMe)
-            @Html.LabelFor(model => model.RememberMe)
-        </div>
+    <div class="col-md-6">
+        <h1>External logins</h1>
+        <hr />
+        @if (Model.ExternalLogins.Count == 0)
+        {
+            <div>No external logins configured!</div>
+        }
+        else
+        {
+            <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+                <div>
+                    @foreach(var provider in Model.ExternalLogins)
+                     {
+                        <button type="submit" value="@provider.Name" 
+                                class="btn btn-primary" name="provider"
+                                title="Login using your @provider.DisplayName account">
+                            @provider.DisplayName
+                        </button>       
+                     }
+                </div>
+            </form>
+        }
     </div>
-    <div class="footer text-center">
-        <button type="submit" class="btn btn-primary btn-round btn-lg btn-block">دخول</button>
-    </div>
-}
+</div>

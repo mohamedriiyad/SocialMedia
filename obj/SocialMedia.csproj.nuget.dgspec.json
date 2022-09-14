@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\work\\Projects\\SocialMedia\\SocialMedia.csproj": {}
+    "D:\\Sources\\SocialMedia\\SocialMedia.csproj": {}
   },
   "projects": {
-    "D:\\work\\Projects\\SocialMedia\\SocialMedia.csproj": {
+    "D:\\Sources\\SocialMedia\\SocialMedia.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\work\\Projects\\SocialMedia\\SocialMedia.csproj",
+        "projectUniqueName": "D:\\Sources\\SocialMedia\\SocialMedia.csproj",
         "projectName": "SocialMedia",
-        "projectPath": "D:\\work\\Projects\\SocialMedia\\SocialMedia.csproj",
-        "packagesPath": "C:\\Users\\Abdallah\\.nuget\\packages\\",
-        "outputPath": "D:\\work\\Projects\\SocialMedia\\obj\\",
+        "projectPath": "D:\\Sources\\SocialMedia\\SocialMedia.csproj",
+        "packagesPath": "C:\\Users\\M_NABIL\\.nuget\\packages\\",
+        "outputPath": "D:\\Sources\\SocialMedia\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Abdallah\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\M_NABIL\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +40,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.Facebook": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
             "Microsoft.AspNetCore.Identity": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -95,7 +103,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     }
