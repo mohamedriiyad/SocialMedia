@@ -1,3 +1,4 @@
+using SocialMedia.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,9 @@ namespace SocialMedia.Data
         {
             
         }
+        public virtual DbSet<ApplicationUser> ApplicationUsers{ get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Reply> Replies { get; set; }
     }
 }
